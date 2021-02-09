@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#G#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "hplus:upgrade_base"
+    }
+  },
+  "result": {
+    "item": "hplus:upgrade_lock",
+    "count": 1
+  }
+}

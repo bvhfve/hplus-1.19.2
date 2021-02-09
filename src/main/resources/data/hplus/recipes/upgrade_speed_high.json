@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#G#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:redstone_block"
+    },
+    "G": {
+      "item": "hplus:upgrade_speed"
+    }
+  },
+  "result": {
+    "item": "hplus:upgrade_speed_high",
+    "count": 1
+  }
+}

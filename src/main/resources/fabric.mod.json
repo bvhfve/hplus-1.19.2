@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "hplus",
+  "version": "${version}",
+  "name": "Better Hoppers (Hopper+)",
+  "description": "Rewrite of Hopper+ with goals to improve stability",
+  "authors": [
+    "Flytre"
+  ],
+  "contact": {
+    "website": "https://www.flytre.net"
+  },
+  "license": "Custom License",
+  "icon": "assets/hplus/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.flytre.hplus2.client.Hplus2Client"
+    ],
+    "main": [
+      "net.flytre.hplus2.Hplus2"
+    ]
+  },
+  "mixins": [
+    "hplus2.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.1",
+    "fabric": "*",
+    "minecraft": "1.16.*"
+  }
+}
