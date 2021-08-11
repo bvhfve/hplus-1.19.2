@@ -4,7 +4,7 @@
       "model": "minecraft:block/hopper"
     },
     "facing=up": {
-      "model": "hplus:block/hopper_plus_inverted"
+      "model": "hplus:block/hopper_inverted"
     },
     "facing=east": {
       "model": "minecraft:block/hopper_side",

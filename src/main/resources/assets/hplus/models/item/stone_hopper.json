@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "hplus:item/hopper_plus"
+    "layer0": "hplus:item/stone_hopper"
   }
 }

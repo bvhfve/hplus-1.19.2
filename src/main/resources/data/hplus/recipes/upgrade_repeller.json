@@ -7,14 +7,14 @@
   ],
   "key": {
     "#": {
-      "item": "minecraft:slime_ball"
+      "item": "minecraft:gravel"
     },
     "G": {
       "item": "hplus:upgrade_base"
     }
   },
   "result": {
-    "item": "hplus:upgrade_vacuum",
+    "item": "hplus:upgrade_repeller",
     "count": 1
   }
 }

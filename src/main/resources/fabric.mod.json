@@ -3,31 +3,30 @@
   "id": "hplus",
   "version": "${version}",
   "name": "Better Hoppers (Hopper+)",
-  "description": "Rewrite of Hopper+ with goals to improve stability",
+  "description": "More hopper functionality",
   "authors": [
     "Flytre"
   ],
   "contact": {
     "website": "https://www.flytre.net"
   },
-  "license": "Custom License",
+  "license": "All Rights Reserved Unless Otherwise Explicitly Stated",
   "icon": "assets/hplus/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "net.flytre.hplus2.client.Hplus2Client"
+      "net.flytre.hplus.HplusInitClient"
     ],
     "main": [
-      "net.flytre.hplus2.Hplus2"
+      "net.flytre.hplus.HplusInit"
     ]
   },
   "mixins": [
-    "hplus2.mixins.json"
+    "hplus.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.11.1",
-    "fabric": "*",
-    "minecraft": "1.16.*",
-    "flytre_lib": ">=0.2.0"
+    "fabricloader": ">=0.10.8",
+    "minecraft": "1.17.*",
+    "flytre_lib": ">=1.2.2"
   }
 }
