@@ -29,15 +29,16 @@ public class FilterScreenHandler extends ScreenHandler {
         this.playerInventory = playerInventory;
         checkSize(inventory, 9 * inventoryHeight);
         inventory.onOpen(playerInventory.player);
-        setupSlots(false);
+        setupSlots();
     }
 
     public FilterInventory getInventory() {
         return inventory;
     }
 
-    public void setupSlots(final boolean includeChestInventory) {
+    public void setupSlots() {
         int i = (this.inventoryHeight - 4) * 18;
+
 
         int n;
         int m;

@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.flytre.flytre_lib.api.base.util.BakeHelper;
 import net.flytre.flytre_lib.api.base.util.PacketUtils;
-import net.flytre.flytre_lib.impl.base.Initializer;
 import net.flytre.hplus.filter.FilterScreenHandler;
 import net.flytre.hplus.filter.FilterUpgrade;
 import net.flytre.hplus.filter.HopperUpgrade;

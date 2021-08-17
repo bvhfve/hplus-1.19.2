@@ -4,6 +4,7 @@ package net.flytre.hplus.misc;
 import net.flytre.hplus.HplusInit;
 import net.flytre.hplus.filter.HopperUpgrade;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
@@ -21,7 +22,7 @@ public class HopperUpgradeRecipe extends SpecialCraftingRecipe {
 
     static {
         HOPPER_PLUS = Ingredient.ofItems(Items.HOPPER);
-        UPGRADE = Ingredient.ofItems(HopperUpgrade.UPGRADES.toArray(new HopperUpgrade[0]));
+        UPGRADE = Ingredient.ofItems(HopperUpgrade.UPGRADES.toArray(new Item[0]));
     }
 
     public HopperUpgradeRecipe(Identifier id) {

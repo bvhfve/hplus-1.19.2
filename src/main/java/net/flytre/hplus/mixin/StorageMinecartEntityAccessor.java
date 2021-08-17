@@ -11,5 +11,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface StorageMinecartEntityAccessor {
 
     @Accessor("inventory")
-    DefaultedList<ItemStack> getInvStackList();
+    DefaultedList<ItemStack> flytre_lib$getInvStackList();
 }

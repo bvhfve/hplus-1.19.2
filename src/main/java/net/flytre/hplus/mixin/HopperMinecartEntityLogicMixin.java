@@ -4,7 +4,6 @@ package net.flytre.hplus.mixin;
 import net.flytre.flytre_lib.api.storage.upgrade.UpgradeInventory;
 import net.flytre.hplus.HplusInit;
 import net.flytre.hplus.misc.MixinHelper;
-import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.vehicle.HopperMinecartEntity;
 import net.minecraft.entity.vehicle.StorageMinecartEntity;
@@ -45,7 +44,7 @@ public abstract class HopperMinecartEntityLogicMixin extends StorageMinecartEnti
     @Inject(method = "tick", at = @At("HEAD"))
     public void hplus$voidUpgrade(CallbackInfo ci) {
         if (!isEmpty() && MixinHelper.hasUpgrade(this, HplusInit.VOID_UPGRADE))
-            ((StorageMinecartEntityAccessor) this).getInvStackList().clear();
+            ((StorageMinecartEntityAccessor) this).flytre_lib$getInvStackList().clear();
     }
 
     @ModifyConstant(method = "tick", constant = @Constant(intValue = 4))

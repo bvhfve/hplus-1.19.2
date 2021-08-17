@@ -2,7 +2,6 @@ package net.flytre.hplus.mixin;
 
 
 import net.flytre.flytre_lib.api.storage.upgrade.UpgradeInventory;
-import net.flytre.hplus.HplusInit;
 import net.flytre.hplus.misc.MixinHelper;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
