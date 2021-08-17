@@ -1,10 +1,8 @@
 package net.flytre.hplus.mixin;
 
 
-import net.flytre.flytre_lib.api.storage.inventory.filter.FilterInventory;
 import net.flytre.flytre_lib.api.storage.upgrade.UpgradeInventory;
 import net.flytre.hplus.HplusInit;
-import net.flytre.hplus.filter.FilterUpgrade;
 import net.flytre.hplus.misc.MixinHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
@@ -15,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -23,7 +20,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -121,6 +117,11 @@ public abstract class HopperBlockEntityLogicMixin extends LootableContainerBlock
             cir.setReturnValue(false);
     }
 
+
+    @Override
+    public boolean isValid(int slot, ItemStack stack) {
+        return MixinHelper.passFilterTest(this, stack);
+    }
 
     @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {

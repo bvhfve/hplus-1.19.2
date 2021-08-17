@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * Upgrade logic for the hopper minecart
  */
 //TODO: hopper minecart crafting / destroying
+//TODO :Require Fapi dependency
 @Mixin(HopperMinecartEntity.class)
 public abstract class HopperMinecartEntityLogicMixin extends StorageMinecartEntity implements UpgradeInventory {
 

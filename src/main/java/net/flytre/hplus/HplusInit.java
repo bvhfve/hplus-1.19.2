@@ -3,9 +3,9 @@ package net.flytre.hplus;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.flytre.flytre_lib.api.base.util.BakeHelper;
 import net.flytre.flytre_lib.api.base.util.PacketUtils;
-import net.flytre.flytre_lib.api.storage.upgrade.UpgradeInventory;
-import net.flytre.flytre_lib.api.storage.upgrade.UpgradeItem;
+import net.flytre.flytre_lib.impl.base.Initializer;
 import net.flytre.hplus.filter.FilterScreenHandler;
 import net.flytre.hplus.filter.FilterUpgrade;
 import net.flytre.hplus.filter.HopperUpgrade;
@@ -23,7 +23,6 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialRecipeSerializer;
@@ -101,5 +100,7 @@ public class HplusInit implements ModInitializer {
 
 
         PacketUtils.registerC2SPacket(FilterC2SPacket.class, FilterC2SPacket::new);
+
+        BakeHelper.fullBake("hplus","hopper",null);
     }
 }

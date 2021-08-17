@@ -17,6 +17,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
+/**
+ * Modify screen to match hopper plus screen
+ */
 @Environment(EnvType.CLIENT)
 @Mixin(HopperScreen.class)
 public abstract class HopperScreenMixin extends HandledScreen<HopperScreenHandler> {
