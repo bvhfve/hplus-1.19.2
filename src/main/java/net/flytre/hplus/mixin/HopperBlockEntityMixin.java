@@ -75,7 +75,7 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     }
 
     @Inject(method = "writeNbt", at = @At("RETURN"))
-    public void flytre_lib$writeNbt(NbtCompound nbt, CallbackInfoReturnable<NbtCompound> cir) {
+    public void flytre_lib$writeNbt(NbtCompound nbt, CallbackInfo ci) {
         UpgradeInventory.toTag(nbt, upgrades);
     }
 

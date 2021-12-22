@@ -3,7 +3,6 @@ package net.flytre.hplus;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import net.flytre.flytre_lib.api.base.util.BakeHelper;
 import net.flytre.flytre_lib.api.base.util.PacketUtils;
 import net.flytre.hplus.filter.FilterScreenHandler;
 import net.flytre.hplus.filter.FilterUpgrade;
@@ -99,7 +98,5 @@ public class HplusInit implements ModInitializer {
 
 
         PacketUtils.registerC2SPacket(FilterC2SPacket.class, FilterC2SPacket::new);
-
-        BakeHelper.fullBake("hplus","hopper",null);
     }
 }
