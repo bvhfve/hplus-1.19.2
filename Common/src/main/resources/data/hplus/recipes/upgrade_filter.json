@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iIi",
+    "IGI",
+    "iIi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_bars"
+    },
+    "G": {
+      "item": "hplus:upgrade_base"
+    }
+  },
+  "result": {
+    "item": "hplus:upgrade_filter",
+    "count": 1
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.flytre.hplus.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "fabric.HopperBlockEntityLogicMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": []
+}
+  

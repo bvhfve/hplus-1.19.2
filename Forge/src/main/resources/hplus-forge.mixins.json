@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.flytre.hplus.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BootstrapMixin", "forge.HopperBlockEntityLogicMixin", "forge.VanillaInventoryCodeHooksMixin", "forge.VanillaHopperItemHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
+  

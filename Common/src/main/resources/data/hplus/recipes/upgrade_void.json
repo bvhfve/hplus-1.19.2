@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#G#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:lava_bucket"
+    },
+    "G": {
+      "item": "hplus:upgrade_base"
+    }
+  },
+  "result": {
+    "item": "hplus:upgrade_void",
+    "count": 1
+  }
+}

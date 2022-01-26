@@ -25,3 +25,6 @@ eclipse
 run
 auth.properties
 proguard
+
+#python
+venv
