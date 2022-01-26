@@ -1,70 +1,80 @@
-plugins {
-	id 'fabric-loom' version '0.10-SNAPSHOT'
-	id 'maven-publish'
+// TODO remove buildscript block
+buildscript {
+
+    repositories {
+    
+        mavenCentral()
+    }
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+apply from: 'gradle/property_loader.gradle'
+apply from: 'gradle/git_changelog.gradle'
 
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
+version = mod_version
 
-repositories {
-	maven { url "https://jitpack.io" }
+
+
+
+subprojects {
+
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+        dependencies {
+            classpath 'com.guardsquare:proguard-gradle:7.2.0-beta5'
+        }
+    }
+
+
+    apply plugin: 'maven-publish'
+    
+    apply from: '../gradle/property_loader.gradle'
+    apply from: '../gradle/java.gradle'
+    apply from: '../gradle/git_changelog.gradle'
+    apply from: '../gradle/minify_jsons.gradle'
+    apply from: '../gradle/signing.gradle'
+    
+    // Disables Gradle's custom module metadata from being published to maven. The 
+    // metadata includes mapped dependencies which are not reasonably consumable by
+    // other mod developers.
+    tasks.withType(GenerateModuleMetadata) {
+
+        enabled = false
+    }
+
+    repositories {
+
+        mavenCentral()
+
+        maven {
+            name = 'Sponge / Mixin'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+
+        maven {
+            name = 'Jitpack'
+            url = 'https://www.jitpack.io'
+        }
+    }
+
+    dependencies {
+        implementation group: 'org.jetbrains', name: 'annotations', version: '23.0.0'
+    }
 }
 
-dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
-	modImplementation "com.github.Flytre:FlytreLib:${project.lib_version}"
-
+allprojects {
+    configurations {
+        dev
+    }
 }
 
-processResources {
-	inputs.property "version", project.version
-
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
-}
-
-tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
-	// Minecraft 1.17 (21w19a) upwards uses Java 16.
-	it.options.release = 17
-}
-
-java {
-	withSourcesJar()
-}
-
-jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
-}
-
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			// add all the jars that should be included when publishing to maven
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
-		}
-	}
-
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		//repositories to publish to
-	}
+//Compile-time dependencies that are not exported
+def moduleDependencies(project, List<String> depNames) {
+    def deps = depNames.iterator().collect { project.dependencies.project(path: ":$it") }
+    project.dependencies {
+        deps.each {
+            compileOnly it
+        }
+    }
 }
