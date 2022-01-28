@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class HopperScreenHandlerMixin implements UpgradeHandler {
 
     @Inject(method = "<init>(ILnet/minecraft/entity/player/PlayerInventory;Lnet/minecraft/inventory/Inventory;)V", at = @At("TAIL"))
-    public void flytre_lib$upgradeSlots(int syncId, PlayerInventory playerInventory, Inventory inventory, CallbackInfo ci) {
+    public void hplus$upgradeSlots(int syncId, PlayerInventory playerInventory, Inventory inventory, CallbackInfo ci) {
         if (inventory instanceof SimpleInventory)
             inventory = new HopperBlockEntity(BlockPos.ORIGIN, Blocks.HOPPER.getDefaultState());
 

@@ -70,7 +70,7 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     }
 
     @Inject(method = "<init>*", at = @At("TAIL"))
-    public void flytre_lib$init(BlockPos pos, BlockState state, CallbackInfo ci) {
+    public void hplus$init(BlockPos pos, BlockState state, CallbackInfo ci) {
         upgrades = DefaultedList.ofSize(5, ItemStack.EMPTY);
         markUpgradesDirty();
     }
@@ -81,12 +81,12 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     }
 
     @Inject(method = "writeNbt", at = @At("RETURN"))
-    public void flytre_lib$writeNbt(NbtCompound nbt, CallbackInfo ci) {
+    public void hplus$writeNbt(NbtCompound nbt, CallbackInfo ci) {
         UpgradeInventory.toTag(nbt, upgrades);
     }
 
     @Inject(method = "readNbt", at = @At("RETURN"))
-    public void flytre_lib$readNbt(NbtCompound nbt, CallbackInfo ci) {
+    public void hplus$readNbt(NbtCompound nbt, CallbackInfo ci) {
         UpgradeInventory.fromTag(nbt, upgrades);
         markUpgradesDirty();
     }

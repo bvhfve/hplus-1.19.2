@@ -1,6 +1,7 @@
 package net.flytre.hplus.mixin;
 
 import net.minecraft.block.*;
+import net.minecraft.entity.vehicle.HopperMinecartEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -21,7 +22,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(value = HopperBlock.class, priority = 99)
 public abstract class HopperBlockMixin extends BlockWithEntity {
-
     @Unique
     private static final VoxelShape UP_RAY_TRACE_SHAPE;
     @Unique

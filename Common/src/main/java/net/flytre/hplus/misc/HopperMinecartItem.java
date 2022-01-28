@@ -1,10 +1,10 @@
 package net.flytre.hplus.misc;
 
 import net.flytre.hplus.recipe.NbtHelper;
-import net.minecraft.block.Block;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.BlockItem;
+import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.MinecartItem;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
@@ -16,15 +16,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class HopperItem extends BlockItem {
-    public HopperItem(Block block, Settings settings) {
-        super(block, settings);
+public class HopperMinecartItem extends MinecartItem {
+    public HopperMinecartItem(AbstractMinecartEntity.Type type, Settings settings) {
+        super(type, settings);
     }
-
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        DefaultedList<ItemStack> items = NbtHelper.getUpgrades(stack, "BlockEntityTag");
+        DefaultedList<ItemStack> items = NbtHelper.getUpgrades(stack, "EntityTag");
 
         if (items == null) {
             super.appendTooltip(stack, world, tooltip, context);

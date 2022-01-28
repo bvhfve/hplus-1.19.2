@@ -1,6 +1,7 @@
-package net.flytre.hplus.misc;
+package net.flytre.hplus.recipe;
 
 
+import net.flytre.flytre_lib.api.base.util.InventoryUtils;
 import net.flytre.hplus.Registry;
 import net.flytre.hplus.filter.HopperUpgrade;
 import net.minecraft.inventory.CraftingInventory;
@@ -17,22 +18,41 @@ import net.minecraft.world.World;
 public class HopperUpgradeRecipe extends SpecialCraftingRecipe {
 
 
-    private static final Ingredient HOPPER_PLUS;
+    private static final Ingredient HOPPER_LIKE;
     private static final Ingredient UPGRADE;
 
     static {
-        HOPPER_PLUS = Ingredient.ofItems(Items.HOPPER);
+        HOPPER_LIKE = Ingredient.ofItems(Items.HOPPER, Items.HOPPER_MINECART);
         UPGRADE = Ingredient.ofItems(HopperUpgrade.UPGRADES.toArray(new Item[0]));
     }
+
 
     public HopperUpgradeRecipe(Identifier id) {
         super(id);
     }
 
+    public static DefaultedList<ItemStack> getUpgrades(ItemStack stack) {
+        if (stack.getItem() == Items.HOPPER) {
+            return NbtHelper.getUpgrades(stack, "BlockEntityTag");
+        } else if (stack.getItem() == Items.HOPPER_MINECART) {
+            return NbtHelper.getUpgrades(stack, "EntityTag");
+        }
+        throw new AssertionError("Unexpected item!");
+    }
+
+    public static ItemStack getWithUpgradeData(ItemStack hopperLike, DefaultedList<ItemStack> list) {
+        if (hopperLike.getItem() == Items.HOPPER) {
+            return NbtHelper.getWithUpgradeData(list, "BlockEntityTag", Items.HOPPER);
+        } else if (hopperLike.getItem() == Items.HOPPER_MINECART) {
+            return NbtHelper.getWithUpgradeData(list, "EntityTag", Items.HOPPER_MINECART);
+        }
+        throw new AssertionError("Unexpected item!");
+    }
+
     @Override
     public boolean matches(CraftingInventory inv, World world) {
         int upgrade = -1;
-        ItemStack hopper = ItemStack.EMPTY;
+        ItemStack hopperLike = ItemStack.EMPTY;
         for (int j = 0; j < inv.size(); ++j) {
             ItemStack itemStack = inv.getStack(j);
             if (!itemStack.isEmpty()) {
@@ -42,16 +62,16 @@ public class HopperUpgradeRecipe extends SpecialCraftingRecipe {
                     else
                         return false;
                 }
-                if (HOPPER_PLUS.test(itemStack)) {
-                    if (hopper.isEmpty())
-                        hopper = itemStack.copy();
+                if (HOPPER_LIKE.test(itemStack)) {
+                    if (hopperLike.isEmpty())
+                        hopperLike = itemStack.copy();
                     else
                         return false;
                 }
             }
         }
-        if (upgrade != -1 && !(hopper.isEmpty())) {
-            DefaultedList<ItemStack> stack = HopperItem.getUpgrades(hopper);
+        if (upgrade != -1 && !(hopperLike.isEmpty())) {
+            DefaultedList<ItemStack> stack = getUpgrades(hopperLike);
             if (stack == null)
                 return true;
             ItemStack upgradeStack = inv.getStack(upgrade);
@@ -62,14 +82,17 @@ public class HopperUpgradeRecipe extends SpecialCraftingRecipe {
                 if (i.isEmpty())
                     empty = true;
             }
-            return empty;
+
+            int index = InventoryUtils.getFirstEmptySlot(getUpgrades(hopperLike));
+            return empty && index != -1;
         }
+
         return false;
     }
 
     @Override
     public ItemStack craft(CraftingInventory inv) {
-        ItemStack hopper = ItemStack.EMPTY;
+        ItemStack hopperLike = ItemStack.EMPTY;
         ItemStack upgrade = ItemStack.EMPTY;
 
 
@@ -80,27 +103,21 @@ public class HopperUpgradeRecipe extends SpecialCraftingRecipe {
                     if (upgrade.isEmpty())
                         upgrade = itemStack.copy();
                 }
-                if (HOPPER_PLUS.test(itemStack)) {
-                    if (hopper.isEmpty())
-                        hopper = itemStack.copy();
+                if (HOPPER_LIKE.test(itemStack)) {
+                    if (hopperLike.isEmpty())
+                        hopperLike = itemStack.copy();
                 }
             }
         }
 
-        DefaultedList<ItemStack> list = HopperItem.getUpgrades(hopper);
+        DefaultedList<ItemStack> list = getUpgrades(hopperLike);
         if (list == null)
-            list = DefaultedList.ofSize(9, ItemStack.EMPTY);
-        int index = 0;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).isEmpty()) {
-                index = i;
-                break;
-            }
-        }
+            list = DefaultedList.ofSize(5, ItemStack.EMPTY);
+        int index = InventoryUtils.getFirstEmptySlot(list);
         ItemStack singleUpgrade = upgrade.copy();
         singleUpgrade.setCount(1);
         list.set(index, singleUpgrade);
-        return HopperItem.getWithUpgradeData(list);
+        return getWithUpgradeData(hopperLike, list);
     }
 
     @Override

@@ -16,12 +16,12 @@
   "item.hplus.upgrade_repeller.tooltip": "Prevents hopper item sucking.",
   "item.hplus.upgrade_void.tooltip": "Deletes items inside.",
   "item.hplus.filter_upgrade.mode": "Filter Type: ",
-  "container.stone_hopper" : "Stone Brick Hopper",
+  "container.stone_hopper": "Stone Brick Hopper",
   "item.hplus.filter_upgrade.whitelist": "Whitelist",
   "item.hplus.filter_upgrade.blacklist": "Blacklist",
-  "block.hplus.stone_hopper" : "Stone Brick Hopper",
-  "item.hplus.filter_upgrade.mod_match.false" : "Ignore Mod",
-  "item.hplus.filter_upgrade.mod_match.true" : "Match by Mod",
-  "item.hplus.filter_upgrade.nbt_match.false" : "Ignore Nbt",
-  "item.hplus.filter_upgrade.nbt_match.true" : "Match Nbt"
+  "block.hplus.stone_hopper": "Stone Brick Hopper",
+  "item.hplus.filter_upgrade.mod_match.false": "Ignore Mod",
+  "item.hplus.filter_upgrade.mod_match.true": "Match by Mod",
+  "item.hplus.filter_upgrade.nbt_match.false": "Ignore Nbt",
+  "item.hplus.filter_upgrade.nbt_match.true": "Match Nbt"
 }

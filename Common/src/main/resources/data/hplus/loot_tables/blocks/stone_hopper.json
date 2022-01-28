@@ -20,6 +20,11 @@
                   "target": "BlockEntityTag.Upgrades",
                   "op": "replace"
                 }
+              ],
+              "conditions": [
+                {
+                  "condition": "flytre_lib:has_upgrade"
+                }
               ]
             }
           ],
