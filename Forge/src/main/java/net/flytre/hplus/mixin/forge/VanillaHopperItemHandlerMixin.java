@@ -3,6 +3,7 @@ package net.flytre.hplus.mixin.forge;
 
 import net.flytre.hplus.Registry;
 import net.flytre.hplus.misc.MixinHelper;
+import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.VanillaHopperItemHandler;
@@ -21,8 +22,8 @@ public class VanillaHopperItemHandlerMixin {
     @Shadow @Final private HopperBlockEntity hopper;
 
     @Inject(method = "insertItem", at = @At("HEAD"), cancellable = true)
-    public void hplus$cancelInsertIfLocked(int slot, @Nonnull ItemStack stack, boolean simulate, CallbackInfoReturnable<ItemStack> cir) {
-        if(MixinHelper.hasUpgrade(hopper, Registry.LOCK_UPGRADE)) {
+    private void hplus$cancelInsertIfLocked(int slot, @Nonnull ItemStack stack, boolean simulate, CallbackInfoReturnable<ItemStack> cir) {
+        if(MixinHelper.hasUpgrade(hopper, Registry.LOCK_UPGRADE.get())) {
             cir.setReturnValue(stack);
         }
     }

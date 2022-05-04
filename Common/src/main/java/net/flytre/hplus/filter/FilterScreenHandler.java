@@ -24,7 +24,7 @@ public class FilterScreenHandler extends ScreenHandler {
     }
 
     public FilterScreenHandler(final int syncId, final PlayerInventory playerInventory, final Inventory inventory) {
-        super(Registry.FILTER_SCREEN_HANDLER, syncId);
+        super(Registry.FILTER_SCREEN_HANDLER.get(), syncId);
         this.inventory = (FilterInventory) inventory;
         this.playerInventory = playerInventory;
         checkSize(inventory, 9 * inventoryHeight);

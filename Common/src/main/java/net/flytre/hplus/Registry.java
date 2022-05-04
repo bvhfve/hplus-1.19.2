@@ -1,14 +1,13 @@
 package net.flytre.hplus;
 
-import net.flytre.flytre_lib.loader.LoaderProperties;
-import net.flytre.flytre_lib.loader.registry.BlockEntityRegisterer;
-import net.flytre.flytre_lib.loader.registry.ScreenHandlerRegisterer;
+import net.flytre.flytre_lib.loader.BlockEntityFactory;
+import net.flytre.flytre_lib.loader.LoaderAgnosticRegistry;
 import net.flytre.hplus.filter.FilterScreenHandler;
 import net.flytre.hplus.filter.FilterUpgrade;
 import net.flytre.hplus.filter.HopperUpgrade;
+import net.flytre.hplus.misc.StoneHopperEntity;
 import net.flytre.hplus.recipe.HopperMinecartRecipe;
 import net.flytre.hplus.recipe.HopperUpgradeRecipe;
-import net.flytre.hplus.misc.StoneHopperEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -17,8 +16,6 @@ import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.math.BlockPos;
@@ -27,21 +24,25 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Supplier;
 
 public class Registry {
 
-    public static final Item FILTER_UPGRADE = register(new FilterUpgrade(new Item.Settings().group(ItemGroup.REDSTONE)), "upgrade_filter");
-    public static final Item REPELLER_UPGRADE = register(new HopperUpgrade(), "upgrade_repeller");
-    public static final Item VOID_UPGRADE = register(new HopperUpgrade(), "upgrade_void");
-    public static final Item LOCK_UPGRADE = register(new HopperUpgrade(), "upgrade_lock");
-    public static final Item BASE_UPGRADE = register(new Item(new Item.Settings().group(ItemGroup.REDSTONE)), "upgrade_base");
 
-    public static SpecialRecipeSerializer<HopperUpgradeRecipe> UPGRADE_RECIPE = LoaderProperties.register(new SpecialRecipeSerializer<>(HopperUpgradeRecipe::new), "hplus", "upgrade_recipe");
-    public static SpecialRecipeSerializer<HopperMinecartRecipe> HOPPER_MINECART_RECIPE = LoaderProperties.register(new SpecialRecipeSerializer<>(HopperMinecartRecipe::new), "hplus", "minecart_recipe");
+    public static final Supplier<Item> FILTER_UPGRADE = registerItem(() -> new FilterUpgrade(new Item.Settings().group(ItemGroup.REDSTONE)), "upgrade_filter");
+    public static final Supplier<Item> REPELLER_UPGRADE = registerItem(HopperUpgrade::new, "upgrade_repeller");
+    public static final Supplier<Item> VOID_UPGRADE = registerItem(HopperUpgrade::new, "upgrade_void");
+    public static final Supplier<Item> LOCK_UPGRADE = registerItem(HopperUpgrade::new, "upgrade_lock");
+    public static final Supplier<Item> BASE_UPGRADE = registerItem(() -> new Item(new Item.Settings().group(ItemGroup.REDSTONE)), "upgrade_base");
+
+    public static Supplier<SpecialRecipeSerializer<HopperUpgradeRecipe>> UPGRADE_RECIPE = LoaderAgnosticRegistry.registerRecipe(() -> new SpecialRecipeSerializer<>(HopperUpgradeRecipe::new), "hplus", "upgrade_recipe");
+    public static Supplier<SpecialRecipeSerializer<HopperMinecartRecipe>> HOPPER_MINECART_RECIPE = LoaderAgnosticRegistry.registerRecipe(() -> new SpecialRecipeSerializer<>(HopperMinecartRecipe::new), "hplus", "minecart_recipe");
 
 
-    public static BlockEntityType<StoneHopperEntity> STONE_HOPPER_ENTITY;
-    public static final HopperBlock STONE_HOPPER = register(new HopperBlock(AbstractBlock.Settings.of(Material.STONE).hardness(3.0f)) {
+    public static Supplier<BlockEntityType<StoneHopperEntity>> STONE_HOPPER_ENTITY;
+
+
+    public static final Supplier<HopperBlock> STONE_HOPPER = registerBlock(() -> new HopperBlock(AbstractBlock.Settings.of(Material.STONE).hardness(3.0f)) {
         @Override
         public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
             return new StoneHopperEntity(pos, state);
@@ -49,51 +50,44 @@ public class Registry {
 
         @Nullable
         public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-            return world.isClient ? null : checkType(type, STONE_HOPPER_ENTITY, HopperBlockEntity::serverTick);
+            return world.isClient ? null : checkType(type, STONE_HOPPER_ENTITY.get(), HopperBlockEntity::serverTick);
         }
     }, "stone_hopper");
 
-    static {
-        STONE_HOPPER_ENTITY = BlockEntityRegisterer.createBuilder(StoneHopperEntity::new, STONE_HOPPER).build(null);
+
+    public static <T extends Block> Supplier<T> registerBlock(Supplier<T> block, String id) {
+        final var temp = LoaderAgnosticRegistry.registerBlock(block, Constants.MOD_ID, id);
+        LoaderAgnosticRegistry.registerItem(() -> new BlockItem(temp.get(), new Item.Settings().group(ItemGroup.REDSTONE)), Constants.MOD_ID, id);
+        return temp;
     }
 
-    @SuppressWarnings("SameParameterValue")
-    static <S extends RecipeSerializer<T>, T extends Recipe<?>> S register(String id, S serializer) {
-        return net.minecraft.util.registry.Registry.register(net.minecraft.util.registry.Registry.RECIPE_SERIALIZER, id, serializer);
-    }    public static final Item SPEED_UPGRADE = register(new HopperUpgrade() {
+    private static <T extends Item> Supplier<T> registerItem(Supplier<T> item, String id) {
+        return LoaderAgnosticRegistry.registerItem(item, Constants.MOD_ID, id);
+    }
+
+
+    public static void init() {
+        STONE_HOPPER_ENTITY = LoaderAgnosticRegistry.registerBlockEntityType(() -> BlockEntityFactory.createBuilder(StoneHopperEntity::new, STONE_HOPPER.get()).build(null), "hplus", "stone_hopper");
+    }
+
+    public static final Supplier<Item> SPEED_UPGRADE = registerItem(() -> new HopperUpgrade() {
 
         @Override
         public Collection<Item> incompatibleUpgrades() {
-            return Set.of(SPEED_UPGRADE_HIGH);
+            return Set.of(SPEED_UPGRADE_HIGH.get());
         }
     }, "upgrade_speed");
 
-    public static <T extends Block> T register(T block, String id) {
-        var tmp = LoaderProperties.register(block, Constants.MOD_ID, id);
-        LoaderProperties.register(new BlockItem(block, new Item.Settings().group(ItemGroup.REDSTONE)), Constants.MOD_ID, id);
-        return tmp;
-    }
 
-    private static <T extends Item> T register(T item, String id) {
-        return LoaderProperties.register(item, Constants.MOD_ID, id);
-    }
-
-    public static void init() {
-        //$$REGISTRY
-    }
-
-
-
-
-    public static final Item SPEED_UPGRADE_HIGH = register(new HopperUpgrade() {
+    public static final Supplier<Item> SPEED_UPGRADE_HIGH = registerItem(() -> new HopperUpgrade() {
         @Override
         public Collection<Item> incompatibleUpgrades() {
-            return Set.of(SPEED_UPGRADE);
+            return Set.of(SPEED_UPGRADE.get());
         }
     }, "upgrade_speed_high");
 
 
-    public static final ScreenHandlerType<FilterScreenHandler> FILTER_SCREEN_HANDLER = LoaderProperties.register((ScreenHandlerRegisterer.SimpleFactory<FilterScreenHandler>) FilterScreenHandler::new, "hplus", "upgrade_filter");
+    public static final Supplier<ScreenHandlerType<FilterScreenHandler>> FILTER_SCREEN_HANDLER = LoaderAgnosticRegistry.registerSimpleScreen(FilterScreenHandler::new, "hplus", "upgrade_filter");
 
 
 }

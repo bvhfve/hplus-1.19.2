@@ -4,9 +4,9 @@
   "package": "net.flytre.hplus.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "HopperBlockEntityLogicMixin", "HopperBlockEntityMixin", "HopperBlockMixin", "HopperMinecartEntityLogicMixin",
-    "HopperMinecartEntityMixin", "HopperMinecartEntitySpeedMixin", "HopperScreenHandlerMixin", "ItemsMixin",
-    "LootableContainerBlockEntityInvoker", "MinecartItemBehaviorMixin", "MinecartItemMixin", "SlotMixin",
+    "BlockItemMixin", "HopperBlockEntityLogicMixin", "HopperBlockEntityMixin", "HopperBlockMixin",
+    "HopperMinecartEntityLogicMixin", "HopperMinecartEntityMixin", "HopperMinecartEntitySpeedMixin",
+    "HopperScreenHandlerMixin", "LootableContainerBlockEntityInvoker", "MinecartItemMixin", "SlotMixin",
     "StorageMinecartEntityAccessor"
   ],
   "client": [

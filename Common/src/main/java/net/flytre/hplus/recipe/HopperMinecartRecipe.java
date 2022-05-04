@@ -1,10 +1,7 @@
 package net.flytre.hplus.recipe;
 
-import net.flytre.flytre_lib.api.base.util.InventoryUtils;
 import net.flytre.hplus.Registry;
-import net.flytre.hplus.filter.HopperUpgrade;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
@@ -83,6 +80,6 @@ public class HopperMinecartRecipe extends SpecialCraftingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return Registry.HOPPER_MINECART_RECIPE;
+        return Registry.HOPPER_MINECART_RECIPE.get();
     }
 }

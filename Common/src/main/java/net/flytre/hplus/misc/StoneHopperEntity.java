@@ -16,7 +16,7 @@ public class StoneHopperEntity extends HopperBlockEntity {
 
     @Override
     public BlockEntityType<?> getType() {
-        return Registry.STONE_HOPPER_ENTITY;
+        return Registry.STONE_HOPPER_ENTITY.get();
     }
 
 

@@ -4,7 +4,8 @@
   "package": "net.flytre.hplus.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "forge.HopperBlockEntityLogicMixin", "forge.VanillaInventoryCodeHooksMixin", "forge.VanillaHopperItemHandlerMixin"
+    "forge.HopperBlockEntityLogicMixin", "forge.MinecartItemBehaviorMixin", "forge.VanillaHopperItemHandlerMixin",
+    "forge.VanillaInventoryCodeHooksMixin"
   ],
   "injectors": {
     "defaultRequire": 1

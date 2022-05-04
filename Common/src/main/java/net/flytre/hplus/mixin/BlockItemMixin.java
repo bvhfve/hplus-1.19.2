@@ -1,10 +1,11 @@
-package net.flytre.hplus.misc;
+package net.flytre.hplus.mixin;
+
 
 import net.flytre.hplus.recipe.NbtHelper;
-import net.minecraft.block.Block;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
@@ -12,22 +13,27 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-public class HopperItem extends BlockItem {
-    public HopperItem(Block block, Settings settings) {
-        super(block, settings);
+@Mixin(BlockItem.class)
+public class BlockItemMixin {
+
+    @Inject(method="appendTooltip", at = @At("HEAD"))
+    private void hplus$customHopperTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context, CallbackInfo ci) {
+        if((Object)this == Items.HOPPER) {
+            hplus$addTooltip(stack, world, tooltip, context);
+        }
     }
 
-
-    @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    private void hplus$addTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         DefaultedList<ItemStack> items = NbtHelper.getUpgrades(stack, "BlockEntityTag");
 
         if (items == null) {
-            super.appendTooltip(stack, world, tooltip, context);
             return;
         }
 
@@ -36,6 +42,5 @@ public class HopperItem extends BlockItem {
             if (!i.isEmpty())
                 tooltip.add((new TranslatableText(i.getTranslationKey())).setStyle(style));
         }
-        super.appendTooltip(stack, world, tooltip, context);
     }
 }

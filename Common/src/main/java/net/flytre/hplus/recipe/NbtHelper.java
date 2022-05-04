@@ -3,7 +3,6 @@ package net.flytre.hplus.recipe;
 import net.flytre.flytre_lib.api.base.util.InventoryUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
 

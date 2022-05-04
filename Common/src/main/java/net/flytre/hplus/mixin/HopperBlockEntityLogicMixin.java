@@ -4,7 +4,6 @@ package net.flytre.hplus.mixin;
 import net.flytre.flytre_lib.api.storage.upgrade.UpgradeInventory;
 import net.flytre.hplus.Registry;
 import net.flytre.hplus.misc.MixinHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.Hopper;
@@ -17,14 +16,14 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -54,12 +53,12 @@ public abstract class HopperBlockEntityLogicMixin extends LootableContainerBlock
 
     @Inject(method = "extract(Lnet/minecraft/world/World;Lnet/minecraft/block/entity/Hopper;)Z", at = @At("HEAD"), cancellable = true)
     private static void hplus$cancelExtractIfLocked(World world, Hopper hopper, CallbackInfoReturnable<Boolean> cir) {
-        if (MixinHelper.hasUpgrade(hopper, Registry.LOCK_UPGRADE))
+        if (MixinHelper.hasUpgrade(hopper, Registry.LOCK_UPGRADE.get()))
             cir.setReturnValue(false);
 
         Inventory inventory = getInputInventory(world, hopper);
 
-        if (MixinHelper.hasUpgrade(inventory, Registry.LOCK_UPGRADE))
+        if (MixinHelper.hasUpgrade(inventory, Registry.LOCK_UPGRADE.get()))
             cir.setReturnValue(false);
     }
 
@@ -85,14 +84,14 @@ public abstract class HopperBlockEntityLogicMixin extends LootableContainerBlock
 
     @Inject(method = "extract(Lnet/minecraft/world/World;Lnet/minecraft/block/entity/Hopper;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/HopperBlockEntity;getInputItemEntities(Lnet/minecraft/world/World;Lnet/minecraft/block/entity/Hopper;)Ljava/util/List;"), cancellable = true)
     private static void hplus$cancelItemExtractionIfLocked(World world, Hopper hopper, CallbackInfoReturnable<Boolean> cir) {
-        if (MixinHelper.hasUpgrade(hopper, Registry.REPELLER_UPGRADE))
+        if (MixinHelper.hasUpgrade(hopper, Registry.REPELLER_UPGRADE.get()))
             cir.setReturnValue(false);
     }
 
 
     @Inject(method = "insertAndExtract", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/HopperBlockEntity;isEmpty()Z"))
     private static void hplus$trashUpgrade(World world, BlockPos pos, BlockState state, HopperBlockEntity blockEntity, BooleanSupplier booleanSupplier, CallbackInfoReturnable<Boolean> cir) {
-        if (!blockEntity.isEmpty() && MixinHelper.hasUpgrade(blockEntity, Registry.VOID_UPGRADE))
+        if (!blockEntity.isEmpty() && MixinHelper.hasUpgrade(blockEntity, Registry.VOID_UPGRADE.get()))
             ((LootableContainerBlockEntityInvoker) blockEntity).flytre_lib$getInventoryContents().clear();
     }
 
@@ -103,13 +102,13 @@ public abstract class HopperBlockEntityLogicMixin extends LootableContainerBlock
 
     @Inject(method = "onEntityCollided", at = @At("HEAD"), cancellable = true)
     private static void hplus$cancelCollisionVacuumLocked(World world, BlockPos pos, BlockState state, Entity entity, HopperBlockEntity blockEntity, CallbackInfo ci) {
-        if (MixinHelper.hasUpgrade(blockEntity, Registry.REPELLER_UPGRADE) || MixinHelper.hasUpgrade(blockEntity, Registry.LOCK_UPGRADE))
+        if (MixinHelper.hasUpgrade(blockEntity, Registry.REPELLER_UPGRADE.get()) || MixinHelper.hasUpgrade(blockEntity, Registry.LOCK_UPGRADE.get()))
             ci.cancel();
     }
 
     @Inject(method = "insertAndExtract", at = @At("HEAD"), cancellable = true)
     private static void hplus$cancelInsertExtractionIfLocked(World world, BlockPos pos, BlockState state, HopperBlockEntity blockEntity, BooleanSupplier booleanSupplier, CallbackInfoReturnable<Boolean> cir) {
-        if (MixinHelper.hasUpgrade(blockEntity, Registry.LOCK_UPGRADE))
+        if (MixinHelper.hasUpgrade(blockEntity, Registry.LOCK_UPGRADE.get()))
             cir.setReturnValue(false);
     }
 
@@ -120,12 +119,12 @@ public abstract class HopperBlockEntityLogicMixin extends LootableContainerBlock
 
     @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-        return !MixinHelper.hasUpgrade(this, Registry.LOCK_UPGRADE);
+        return !MixinHelper.hasUpgrade(this, Registry.LOCK_UPGRADE.get());
     }
 
     @Override
     public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-        return !MixinHelper.hasUpgrade(this, Registry.LOCK_UPGRADE);
+        return !MixinHelper.hasUpgrade(this, Registry.LOCK_UPGRADE.get());
     }
 
 

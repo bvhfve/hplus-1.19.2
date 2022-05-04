@@ -25,18 +25,17 @@ public class MixinHelper {
 
     public static int getMaxCooldown(Object hopper) {
         int multi = hopper instanceof StoneHopperEntity ? 3 : 1;
-        if (hasUpgrade(hopper, Registry.SPEED_UPGRADE_HIGH))
+        if (hasUpgrade(hopper, Registry.SPEED_UPGRADE_HIGH.get()))
             return 2 * multi;
-        if (hasUpgrade(hopper, Registry.SPEED_UPGRADE))
+        if (hasUpgrade(hopper, Registry.SPEED_UPGRADE.get()))
             return 4 * multi;
         return 8 * multi;
     }
 
     public static boolean passFilterTest(Object hopper, ItemStack stack) {
-        if (!(hopper instanceof UpgradeInventory))
+        if (!(hopper instanceof UpgradeInventory inv))
             return true;
 
-        UpgradeInventory inv = (UpgradeInventory) hopper;
         ItemStack filter = null;
 
         for (ItemStack i : inv.getUpgrades())

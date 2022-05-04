@@ -4,7 +4,7 @@
   "package": "net.flytre.hplus.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "fabric.HopperBlockEntityLogicMixin"
+    "fabric.HopperBlockEntityLogicMixin", "fabric.MinecartItemBehaviorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

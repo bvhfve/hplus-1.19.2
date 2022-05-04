@@ -1,8 +1,14 @@
 package net.flytre.hplus.mixin;
 
+import net.flytre.flytre_lib.api.storage.upgrade.UpgradeInventory;
 import net.minecraft.block.*;
-import net.minecraft.entity.vehicle.HopperMinecartEntity;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.HopperBlockEntity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
@@ -12,6 +18,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -61,20 +68,41 @@ public abstract class HopperBlockMixin extends BlockWithEntity {
     }
 
     @Inject(method = "getOutlineShape", at = @At("HEAD"), cancellable = true)
-    public void hplus$getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context, CallbackInfoReturnable<VoxelShape> cir) {
+    private void hplus$getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context, CallbackInfoReturnable<VoxelShape> cir) {
         if (state.get(FACING) == Direction.UP)
             cir.setReturnValue(UP_SHAPE);
     }
 
     @Inject(method = "getRaycastShape", at = @At("HEAD"), cancellable = true)
-    public void hplus$getRaycastShape(BlockState state, BlockView world, BlockPos pos, CallbackInfoReturnable<VoxelShape> cir) {
+    private void hplus$getRaycastShape(BlockState state, BlockView world, BlockPos pos, CallbackInfoReturnable<VoxelShape> cir) {
         if (state.get(FACING) == Direction.UP)
             cir.setReturnValue(UP_RAY_TRACE_SHAPE);
     }
 
     @Inject(method = "getPlacementState", at = @At("HEAD"), cancellable = true)
-    public void hplus$getPlacementState(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir) {
+    private void hplus$getPlacementState(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir) {
         Direction direction = ctx.getSide().getOpposite();
         cir.setReturnValue(this.getDefaultState().with(FACING, direction).with(ENABLED, true));
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        BlockEntity blockentity = world.getBlockEntity(pos);
+        if (blockentity instanceof HopperBlockEntity hopperEntity) {
+            if (!world.isClient && player.isCreative() && !((UpgradeInventory) hopperEntity).hasNoUpgrades()) {
+                ItemStack itemstack = new ItemStack(Items.HOPPER);
+                blockentity.setStackNbt(itemstack);
+                itemstack.getOrCreateSubNbt("BlockEntityTag").remove("Inventory");
+                if (hopperEntity.hasCustomName()) {
+                    itemstack.setCustomName(hopperEntity.getCustomName());
+                }
+                ItemEntity itementity = new ItemEntity(world, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, itemstack);
+                itementity.setToDefaultPickupDelay();
+                world.spawnEntity(itementity);
+
+                return;
+            }
+        }
+        super.onBreak(world, pos, state, player);
     }
 }

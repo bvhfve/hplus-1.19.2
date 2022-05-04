@@ -70,7 +70,7 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     }
 
     @Inject(method = "<init>*", at = @At("TAIL"))
-    public void hplus$init(BlockPos pos, BlockState state, CallbackInfo ci) {
+    private void hplus$init(BlockPos pos, BlockState state, CallbackInfo ci) {
         upgrades = DefaultedList.ofSize(5, ItemStack.EMPTY);
         markUpgradesDirty();
     }

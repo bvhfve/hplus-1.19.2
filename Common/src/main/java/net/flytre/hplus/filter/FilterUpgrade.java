@@ -1,26 +1,21 @@
 package net.flytre.hplus.filter;
 
-import net.flytre.flytre_lib.api.base.util.Formatter;
 import net.flytre.flytre_lib.api.storage.inventory.filter.FilterInventory;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.*;
-import net.minecraft.util.Formatting;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class FilterUpgrade extends HopperUpgrade {
 

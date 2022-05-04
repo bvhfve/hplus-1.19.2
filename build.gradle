@@ -1,18 +1,7 @@
-// TODO remove buildscript block
-buildscript {
-
-    repositories {
-    
-        mavenCentral()
-    }
-}
-
 apply from: 'gradle/property_loader.gradle'
 apply from: 'gradle/git_changelog.gradle'
 
 version = mod_version
-
-
 
 
 subprojects {
@@ -22,7 +11,7 @@ subprojects {
             mavenCentral()
         }
         dependencies {
-            classpath 'com.guardsquare:proguard-gradle:7.2.0-beta5'
+            classpath 'com.guardsquare:proguard-gradle:7.2.0'
         }
     }
 
@@ -34,8 +23,8 @@ subprojects {
     apply from: '../gradle/git_changelog.gradle'
     apply from: '../gradle/minify_jsons.gradle'
     apply from: '../gradle/signing.gradle'
-    
-    // Disables Gradle's custom module metadata from being published to maven. The 
+
+    // Disables Gradle's custom module metadata from being published to maven. The
     // metadata includes mapped dependencies which are not reasonably consumable by
     // other mod developers.
     tasks.withType(GenerateModuleMetadata) {
@@ -45,7 +34,7 @@ subprojects {
 
     repositories {
 
-        mavenCentral()
+        mavenLocal()
 
         maven {
             name = 'Sponge / Mixin'
@@ -55,6 +44,11 @@ subprojects {
         maven {
             name = 'Jitpack'
             url = 'https://www.jitpack.io'
+        }
+
+        maven {
+            name = 'Shedaniel'
+            url = "https://maven.shedaniel.me/"
         }
     }
 

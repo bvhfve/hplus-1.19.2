@@ -1,7 +1,7 @@
 import net.fabricmc.loom.task.RemapJarTask
 
 plugins {
-    id 'dev.architectury.loom' version '0.10.0-SNAPSHOT'
+    id 'dev.architectury.loom' version '0.11.0-SNAPSHOT'
     id 'net.darkhax.curseforgegradle' version '1.0.7'
     id 'net.darkhax.tweedle' version '1.0.5'
     id 'idea'
@@ -16,8 +16,7 @@ dependencies {
     mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
     forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    modImplementation("com.github.Flytre.FlytreLib:flytre_lib-1.18.1-${project.lib_version}-forge:${project.lib_hash}") {
-        exclude group: "com.github.Flytre.FlytreLib", module: "Common"
+    modImplementation("net.flytre.flytre_lib:flytre_lib-${minecraft_version}-forge:${lib_version}") {
         exclude group: "org.jetbrains", module: "annotations"
     }
 }
@@ -194,7 +193,7 @@ task buildObfuscatedJar() {
     task remap(type: RemapJarTask) {
         input = file("build/libs/${archivesBaseName}-final.jar")
         addNestedDependencies = false
-        remapAccessWidener = true;
+//        remapAccessWidener = true;
     }
 
     task cleanUp(type: Exec) {

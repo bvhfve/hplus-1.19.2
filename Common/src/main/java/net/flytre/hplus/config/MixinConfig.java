@@ -28,13 +28,4 @@ public class MixinConfig {
     }
 
 
-    public enum HopperMinecartSpeed {
-
-        @SerializedName("disabled")
-        DISABLED,
-        @SerializedName("slow")
-        SLOW
-    }
-
-
 }

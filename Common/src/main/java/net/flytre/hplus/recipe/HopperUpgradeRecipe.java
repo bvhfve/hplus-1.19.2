@@ -128,9 +128,8 @@ public class HopperUpgradeRecipe extends SpecialCraftingRecipe {
     public ItemStack getOutput() {
         return new ItemStack(Items.HOPPER);
     }
-
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return Registry.UPGRADE_RECIPE;
+        return Registry.UPGRADE_RECIPE.get();
     }
 }

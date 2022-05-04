@@ -1,5 +1,6 @@
 package net.flytre.hplus.mixin;
 
+import net.flytre.hplus.config.HopperMinecartSpeed;
 import net.flytre.hplus.config.MixinConfig;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -25,9 +26,9 @@ public class HplusMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        MixinConfig.HopperMinecartSpeed speed = MixinConfig.INSTANCE.getConfig().hopperMinecartSpeed;
+        HopperMinecartSpeed speed = MixinConfig.INSTANCE.getConfig().hopperMinecartSpeed;
 
-        if (speed != MixinConfig.HopperMinecartSpeed.SLOW && mixinClassName.equals("net.flytre.hplus.mixin.HopperMinecartEntitySpeedMixin"))
+        if (speed != HopperMinecartSpeed.SLOW && mixinClassName.equals("net.flytre.hplus.mixin.HopperMinecartEntitySpeedMixin"))
             return false;
 
         return true;

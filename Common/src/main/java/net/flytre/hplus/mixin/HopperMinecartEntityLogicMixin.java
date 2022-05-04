@@ -38,31 +38,31 @@ public abstract class HopperMinecartEntityLogicMixin extends StorageMinecartEnti
     public abstract int size();
 
     @Inject(method = "tick", at = @At("HEAD"))
-    public void hplus$voidUpgrade(CallbackInfo ci) {
-        if (!isEmpty() && MixinHelper.hasUpgrade(this, Registry.VOID_UPGRADE))
+    private void hplus$voidUpgrade(CallbackInfo ci) {
+        if (!isEmpty() && MixinHelper.hasUpgrade(this, Registry.VOID_UPGRADE.get()))
             ((StorageMinecartEntityAccessor) this).flytre_lib$getInvStackList().clear();
     }
 
     @Inject(method = "canOperate", at = @At(value = "HEAD"), cancellable = true)
-    public void hplus$cancelExtractIfLocked(CallbackInfoReturnable<Boolean> cir) {
-        if (MixinHelper.hasUpgrade(this, Registry.LOCK_UPGRADE))
+    private void hplus$cancelExtractIfLocked(CallbackInfoReturnable<Boolean> cir) {
+        if (MixinHelper.hasUpgrade(this, Registry.LOCK_UPGRADE.get()))
             cir.setReturnValue(false);
     }
 
     @Inject(method = "canOperate", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getEntitiesByClass(Ljava/lang/Class;Lnet/minecraft/util/math/Box;Ljava/util/function/Predicate;)Ljava/util/List;"), cancellable = true)
-    public void hplus$cancelItemSuckingIfRepelled(CallbackInfoReturnable<Boolean> cir) {
-        if (MixinHelper.hasUpgrade(this, Registry.REPELLER_UPGRADE))
+    private void hplus$cancelItemSuckingIfRepelled(CallbackInfoReturnable<Boolean> cir) {
+        if (MixinHelper.hasUpgrade(this, Registry.REPELLER_UPGRADE.get()))
             cir.setReturnValue(false);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
-    public void hplus$fixMinecartSpeed(CallbackInfo ci) {
+    private void hplus$fixMinecartSpeed(CallbackInfo ci) {
         currentBlockPos = getBlockPos();
     }
 
 
     @Override
     public boolean isValid(int slot, ItemStack stack) {
-        return !MixinHelper.hasUpgrade(this, Registry.LOCK_UPGRADE) && MixinHelper.passFilterTest(this, stack);
+        return !MixinHelper.hasUpgrade(this, Registry.LOCK_UPGRADE.get()) && MixinHelper.passFilterTest(this, stack);
     }
 }

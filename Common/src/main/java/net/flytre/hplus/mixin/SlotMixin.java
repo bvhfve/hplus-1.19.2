@@ -24,7 +24,7 @@ public class SlotMixin {
     public Inventory inventory;
 
     @Inject(method = "canInsert", at = @At("HEAD"), cancellable = true)
-    public void hplus$filterTest(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+    private void hplus$filterTest(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         if (inventory instanceof UpgradeInventory) {
             cir.setReturnValue(MixinHelper.passFilterTest(inventory, stack));
         }
