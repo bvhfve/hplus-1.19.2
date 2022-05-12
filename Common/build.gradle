@@ -14,9 +14,6 @@ dependencies {
     //Don't actually use fabric classes, they're there to compile
     modCompileOnly "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.flytre.flytre_lib:flytre_lib-${minecraft_version}-common:${lib_version}"
-}
-
-task prepareWorkspace {
 
 }
 

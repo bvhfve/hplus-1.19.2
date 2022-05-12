@@ -122,9 +122,9 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.changelog = project.ext.mod_changelog
     mainFile.addJavaVersion('Java 17')
     mainFile.addJavaVersion('Java 18')
-    mainFile.releaseType = 'release'
+    mainFile.releaseType = 'beta'
     mainFile.addModLoader('Forge')
-    mainFile.addRelation("lib", "requiredDependency")
+    mainFile.addRelation("lib","requiredDependency")
 
     def versions = supported_versions.split(",")
     versions.each(v -> {
@@ -140,21 +140,27 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     }
 }
 
-task buildObfuscatedJar() {
+task buildObfuscatedJarForge() {
 
-    task prepareForObfuscation(type: Exec) {
-        workingDir '../proguard'
-        String rootDir = file(".").toPath().toString()
-        String buildDir = file("build/libs")
-        commandLine 'python', "prepare_obfuscation.py", "${rootDir}", "${buildDir}", "${archivesBaseName}", "${mod_id}"
+    task preObfuscation(type: Exec) {
+
+        doFirst {
+            def args = ["java", "-cp", "../proguard/mod-obfuscator-1.0.0-all.jar", "net.flytre.mod_obfuscator.PreObfuscationTasks", "build/libs", "${archivesBaseName}", "../proguard", "${mod_id}"]
+            configurations.runtimeClasspath.each {
+                args << (it.path + "") //adds item
+            }
+
+            commandLine args
+
+        }
     }
 
 
     task obfuscateStep1(type: proguard.gradle.ProGuardTask) {
         outputs.upToDateWhen { false }
         doFirst {
-            injars("build/libs/${archivesBaseName}-mod.jar")
-            outjars("build/libs/${archivesBaseName}-dev-obfus.jar")
+            injars("build/libs/${archivesBaseName}-pre.jar")
+            outjars("build/libs/${archivesBaseName}-obfus.jar")
 
             configurations.runtimeClasspath.each {
                 libraryjars(it.path + "")
@@ -169,8 +175,8 @@ task buildObfuscatedJar() {
     task obfuscateStep2(type: proguard.gradle.ProGuardTask) {
         outputs.upToDateWhen { false }
         doFirst {
-            injars("build/libs/${archivesBaseName}-dev-obfus.jar")
-            outjars("build/libs/${archivesBaseName}-dev-obfus2.jar")
+            injars("build/libs/${archivesBaseName}-obfus.jar")
+            outjars("build/libs/${archivesBaseName}-obfus2.jar")
 
             configurations.runtimeClasspath.each {
                 libraryjars(it.path + "")
@@ -179,42 +185,37 @@ task buildObfuscatedJar() {
             configuration("../proguard/proguard2.cfg")
             repackageclasses("net.flytre.${mod_id}.mixin")
             printmapping("../proguard/mappings/${archivesBaseName}-mixin.mappings")
+            obfuscationdictionary("../proguard/mixin_dictionary.txt")
         }
     }
 
-    task fixMixinNames(type: Exec) {
-        workingDir '../proguard'
-        String rootDir = file(".").toPath().toString()
-        String buildDir = file("build/libs")
-        commandLine 'python', "fix_mixin_names.py", "${rootDir}", "${buildDir}", "${archivesBaseName}", "${mod_id}"
+    task postObfuscation(type: Exec) {
+        commandLine "java", "-cp", "../proguard/mod-obfuscator-1.0.0-all.jar", "net.flytre.mod_obfuscator.PostObfuscationTasks", "build/libs", "${archivesBaseName}"
     }
 
 
     task remap(type: RemapJarTask) {
-        input = file("build/libs/${archivesBaseName}-final.jar")
+        input = file("build/libs/${archivesBaseName}-post.jar")
         addNestedDependencies = false
 //        remapAccessWidener = true;
     }
 
-    task cleanUp(type: Exec) {
-        workingDir '../proguard'
-        String rootDir = file(".").toPath().toString()
-        String buildDir = file("build/libs")
-        commandLine 'python', "clean_up.py", "${rootDir}", "${buildDir}", "${archivesBaseName}"
+    task postRemap(type: Exec) {
+        commandLine "java", "-cp", "../proguard/mod-obfuscator-1.0.0-all.jar", "net.flytre.mod_obfuscator.PostRemappingTasks", "build/libs", "${archivesBaseName}"
     }
 
     dependsOn 'build'
-    dependsOn 'prepareForObfuscation'
+    dependsOn 'preObfuscation'
     dependsOn 'obfuscateStep1'
     dependsOn 'obfuscateStep2'
-    dependsOn 'fixMixinNames'
-    dependsOn 'cleanUp'
+    dependsOn 'postObfuscation'
     dependsOn 'remap'
+    dependsOn 'postRemap'
 
-    tasks.findByName('prepareForObfuscation').mustRunAfter 'build'
-    tasks.findByName('obfuscateStep1').mustRunAfter 'prepareForObfuscation'
+    tasks.findByName('preObfuscation').mustRunAfter 'build'
+    tasks.findByName('obfuscateStep1').mustRunAfter 'preObfuscation'
     tasks.findByName('obfuscateStep2').mustRunAfter 'obfuscateStep1'
-    tasks.findByName('fixMixinNames').mustRunAfter 'obfuscateStep2'
-    tasks.findByName('remap').mustRunAfter 'fixMixinNames'
-    tasks.findByName('cleanUp').mustRunAfter 'remap'
+    tasks.findByName('postObfuscation').mustRunAfter 'obfuscateStep2'
+    tasks.findByName('remap').mustRunAfter 'postObfuscation'
+    tasks.findByName('postRemap').mustRunAfter 'remap'
 }

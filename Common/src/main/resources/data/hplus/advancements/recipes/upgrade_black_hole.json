@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "hplus:upgrade_black_hole"
+    ]
+  },
+  "criteria": {
+    "has_suction_upgrade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hplus:upgrade_suction"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "hplus:upgrade_black_hole"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_suction_upgrade",
+      "has_the_recipe"
+    ]
+  ]
+}

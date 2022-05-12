@@ -1,24 +1,155 @@
 {
   "variants": {
-    "facing=down": {
-      "model": "minecraft:block/hopper"
+    "facing=up,from=up": {
+      "model": "hplus:block/hopper_up"
     },
-    "facing=up": {
-      "model": "hplus:block/hopper_inverted"
+    "facing=down,from=up": {
+      "model": "hplus:block/hopper"
     },
-    "facing=east": {
-      "model": "minecraft:block/hopper_side",
-      "y": 90
+    "facing=north,from=up": {
+      "model": "hplus:block/hopper_north"
     },
-    "facing=north": {
-      "model": "minecraft:block/hopper_side"
+    "facing=east,from=up": {
+      "model": "hplus:block/hopper_east"
     },
-    "facing=south": {
-      "model": "minecraft:block/hopper_side",
+    "facing=south,from=up": {
+      "model": "hplus:block/hopper_south"
+    },
+    "facing=west,from=up": {
+      "model": "hplus:block/hopper_west"
+    },
+    "facing=down,from=down": {
+      "model": "hplus:block/hopper_up",
+      "x": 180
+    },
+    "facing=up,from=down": {
+      "model": "hplus:block/hopper",
+      "x": 180
+    },
+    "facing=north,from=down": {
+      "model": "hplus:block/hopper_north",
+      "x": 180,
       "y": 180
     },
-    "facing=west": {
-      "model": "minecraft:block/hopper_side",
+    "facing=east,from=down": {
+      "model": "hplus:block/hopper_east",
+      "x": 180
+    },
+    "facing=south,from=down": {
+      "model": "hplus:block/hopper_south",
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,from=down": {
+      "model": "hplus:block/hopper_west",
+      "x": 180
+    },
+    "facing=north,from=north": {
+      "model": "hplus:block/hopper_up",
+      "x": 90
+    },
+    "facing=south,from=north": {
+      "model": "hplus:block/hopper",
+      "x": 90
+    },
+    "facing=up,from=north": {
+      "model": "hplus:block/hopper_south",
+      "x": 90
+    },
+    "facing=east,from=north": {
+      "model": "hplus:block/hopper_east",
+      "x": 90
+    },
+    "facing=down,from=north": {
+      "model": "hplus:block/hopper_north",
+      "x": 90
+    },
+    "facing=west,from=north": {
+      "model": "hplus:block/hopper_west",
+      "x": 90
+    },
+    "facing=south,from=south": {
+      "model": "hplus:block/hopper_up",
+      "x": 270
+    },
+    "facing=north,from=south": {
+      "model": "hplus:block/hopper",
+      "x": 270
+    },
+    "facing=up,from=south": {
+      "model": "hplus:block/hopper_north",
+      "x": 270
+    },
+    "facing=east,from=south": {
+      "model": "hplus:block/hopper_east",
+      "x": 270
+    },
+    "facing=down,from=south": {
+      "model": "hplus:block/hopper_south",
+      "x": 270
+    },
+    "facing=west,from=south": {
+      "model": "hplus:block/hopper_west",
+      "x": 270
+    },
+    "facing=east,from=east": {
+      "model": "hplus:block/hopper_up",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,from=east": {
+      "model": "hplus:block/hopper",
+      "x": 90,
+      "y": 90
+    },
+    "facing=up,from=east": {
+      "model": "hplus:block/hopper_south",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,from=east": {
+      "model": "hplus:block/hopper_west",
+      "x": 90,
+      "y": 90
+    },
+    "facing=down,from=east": {
+      "model": "hplus:block/hopper_north",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south,from=east": {
+      "model": "hplus:block/hopper_east",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,from=west": {
+      "model": "hplus:block/hopper_up",
+      "x": 90,
+      "y": 270
+    },
+    "facing=east,from=west": {
+      "model": "hplus:block/hopper",
+      "x": 90,
+      "y": 270
+    },
+    "facing=up,from=west": {
+      "model": "hplus:block/hopper_south",
+      "x": 90,
+      "y": 270
+    },
+    "facing=north,from=west": {
+      "model": "hplus:block/hopper_east",
+      "x": 90,
+      "y": 270
+    },
+    "facing=down,from=west": {
+      "model": "hplus:block/hopper_north",
+      "x": 90,
+      "y": 270
+    },
+    "facing=south,from=west": {
+      "model": "hplus:block/hopper_west",
+      "x": 90,
       "y": 270
     }
   }

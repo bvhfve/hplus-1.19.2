@@ -24,7 +24,7 @@ public class VanillaInventoryCodeHooksMixin {
     }
 
     @Redirect(method = "extractHook", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/items/VanillaInventoryCodeHooks;getItemHandler(Lnet/minecraft/world/World;Lnet/minecraft/block/entity/Hopper;Lnet/minecraft/util/math/Direction;)Ljava/util/Optional;"))
-    private static Optional<Pair<IItemHandler, Object>> hplus$fixInsertionDirection(World level, Hopper hopper, Direction hopperFacing) {
-        return getItemHandler(level, hopper, MixinHelper.getExtractDirection(hopper).getOpposite());
+    private static Optional<Pair<IItemHandler, Object>> hplus$fixExtractionDirection(World level, Hopper hopper, Direction hopperFacing) {
+        return getItemHandler(level, hopper, MixinHelper.getExtractDirection(hopper));
     }
 }

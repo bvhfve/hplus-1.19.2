@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "b#b",
+    "#G#",
+    "b#b"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:obsidian"
+    },
+    "G": {
+      "item": "hplus:upgrade_suction"
+    },
+    "b" : {
+      "item" : "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "item": "hplus:upgrade_black_hole",
+    "count": 1
+  }
+}

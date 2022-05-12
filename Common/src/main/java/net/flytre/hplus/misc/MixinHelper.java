@@ -4,13 +4,13 @@ import net.flytre.flytre_lib.api.storage.inventory.filter.FilterInventory;
 import net.flytre.flytre_lib.api.storage.upgrade.UpgradeInventory;
 import net.flytre.hplus.Registry;
 import net.flytre.hplus.filter.FilterUpgrade;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HopperBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.Hopper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
+
+import static net.flytre.hplus.misc.StaticConstants.FROM;
 
 public class MixinHelper {
 
@@ -51,16 +51,19 @@ public class MixinHelper {
     }
 
 
+    /**
+     * Returns the direction this hopper extracts from.
+     * For the default hopper, it extracts from an inventory above it
+     * so the default value is Direction.UP.
+     */
     public static Direction getExtractDirection(Hopper hopper) {
 
-        if (hopper instanceof BlockEntity) {
-            BlockState state = ((BlockEntity) hopper).getCachedState();
-            if (state.getProperties().contains(HopperBlock.FACING)) {
-                return ((BlockEntity) hopper).getCachedState().get(HopperBlock.FACING) == Direction.UP ? Direction.UP : Direction.DOWN;
-            }
+        if (hopper instanceof BlockEntity entity) {
+            return entity.getCachedState().get(FROM);
         }
 
-        return Direction.DOWN;
+        return Direction.UP;
     }
+
 
 }

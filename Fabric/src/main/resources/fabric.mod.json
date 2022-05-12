@@ -25,7 +25,10 @@
     "main": [
       "net.flytre.hplus.Initializer"
     ],
-    "server": []
+    "server": [],
+    "rei": [
+      "net.flytre.hplus.rei.HplusPlugin"
+    ]
   },
   "mixins": [
     "${mod_id}.mixins.json",
