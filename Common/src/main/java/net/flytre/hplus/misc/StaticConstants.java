@@ -7,7 +7,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 
-//todo: see if can dynamically add models for upgraded hoppers
 public class StaticConstants {
 
     public static final VoxelShape[][] HOPPER_SHAPES;

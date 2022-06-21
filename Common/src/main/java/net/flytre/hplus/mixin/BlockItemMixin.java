@@ -9,7 +9,6 @@ import net.minecraft.item.Items;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
@@ -40,7 +39,7 @@ public class BlockItemMixin {
         Style style = Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.GRAY)).withItalic(true);
         for (ItemStack i : items) {
             if (!i.isEmpty())
-                tooltip.add((new TranslatableText(i.getTranslationKey())).setStyle(style));
+                tooltip.add((Text.translatable(i.getTranslationKey())).setStyle(style));
         }
     }
 }

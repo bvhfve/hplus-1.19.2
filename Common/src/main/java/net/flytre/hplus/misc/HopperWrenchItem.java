@@ -8,12 +8,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.MessageType;
+import net.minecraft.network.message.MessageType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Property;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
@@ -60,12 +59,12 @@ public class HopperWrenchItem extends WrenchItem {
             } while (blockState.get(HopperBlock.FACING) == blockState.get(StaticConstants.FROM));
 
             world.setBlockState(pos, blockState, Block.NOTIFY_LISTENERS | Block.FORCE_STATE);
-            sendMessage(player, new TranslatableText(Items.DEBUG_STICK.getTranslationKey() + ".update", property.getName(), getValueString(blockState, property)));
+            sendMessage(player, Text.translatable(Items.DEBUG_STICK.getTranslationKey() + ".update", property.getName(), getValueString(blockState, property)));
         } else {
             property = cycle(collection, property);
             String blockState = property.getName();
             nbtCompound.putString(string, blockState);
-            sendMessage(player, new TranslatableText(Items.DEBUG_STICK.getTranslationKey() + ".select", blockState, getValueString(state, property)));
+            sendMessage(player, Text.translatable(Items.DEBUG_STICK.getTranslationKey() + ".select", blockState, getValueString(state, property)));
         }
     }
 
@@ -79,7 +78,7 @@ public class HopperWrenchItem extends WrenchItem {
 
     private static void sendMessage(PlayerEntity player, Text message) {
         if (player instanceof ServerPlayerEntity)
-            ((ServerPlayerEntity) player).sendMessage(message, MessageType.GAME_INFO, Util.NIL_UUID);
+            player.sendMessage(message, true);
     }
 
     private static <T extends Comparable<T>> String getValueString(BlockState state, Property<T> property) {

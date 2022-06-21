@@ -9,7 +9,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
 public class FilterScreen extends FilteredScreen<FilterScreenHandler> {
@@ -37,9 +36,9 @@ public class FilterScreen extends FilteredScreen<FilterScreenHandler> {
     public void init() {
         super.init();
 
-        addButton(startInfo.getFilterType(), 0, MODE_BUTTON, (__, state) -> new FilterC2SPacket(FilterC2SPacket.Type.MODE,state), () -> null, new TranslatableText("item.hplus.filter_upgrade.whitelist"), new TranslatableText("item.hplus.filter_upgrade.blacklist"));
-        addButton(startInfo.isMatchMod() ? 1 : 0, 1, MOD_BUTTON, (__, state) -> new FilterC2SPacket(FilterC2SPacket.Type.MOD,state), () -> null, new TranslatableText("item.hplus.filter_upgrade.mod_match.false"), new TranslatableText("item.hplus.filter_upgrade.mod_match.true"));
-        addButton(startInfo.isMatchNbt() ? 1 : 0, 2, NBT_BUTTON, (__, state) -> new FilterC2SPacket(FilterC2SPacket.Type.NBT,state), () -> null, new TranslatableText("item.hplus.filter_upgrade.nbt_match.false"), new TranslatableText("item.hplus.filter_upgrade.nbt_match.true"));
+        addButton(startInfo.getFilterType(), 0, MODE_BUTTON, (__, state) -> new FilterC2SPacket(FilterC2SPacket.Type.MODE,state), () -> null, Text.translatable("item.hplus.filter_upgrade.whitelist"), Text.translatable("item.hplus.filter_upgrade.blacklist"));
+        addButton(startInfo.isMatchMod() ? 1 : 0, 1, MOD_BUTTON, (__, state) -> new FilterC2SPacket(FilterC2SPacket.Type.MOD,state), () -> null, Text.translatable("item.hplus.filter_upgrade.mod_match.false"), Text.translatable("item.hplus.filter_upgrade.mod_match.true"));
+        addButton(startInfo.isMatchNbt() ? 1 : 0, 2, NBT_BUTTON, (__, state) -> new FilterC2SPacket(FilterC2SPacket.Type.NBT,state), () -> null, Text.translatable("item.hplus.filter_upgrade.nbt_match.false"), Text.translatable("item.hplus.filter_upgrade.nbt_match.true"));
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {

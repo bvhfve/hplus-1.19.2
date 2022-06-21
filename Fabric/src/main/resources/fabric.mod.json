@@ -26,8 +26,8 @@
       "net.flytre.hplus.Initializer"
     ],
     "server": [],
-    "rei": [
-      "net.flytre.hplus.rei.HplusPlugin"
+    "rei_client": [
+      "net.flytre.hplus.rei.HplusClientPlugin"
     ]
   },
   "mixins": [
@@ -36,7 +36,7 @@
   ],
   "depends": {
     "fabricloader": ">=0.11",
-    "minecraft": "1.18.x",
+    "minecraft": "1.19.x",
     "fabric" : "*",
     "flytre_lib": ">=${lib_version}",
     "java": ">=17"

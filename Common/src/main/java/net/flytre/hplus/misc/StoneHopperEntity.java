@@ -5,7 +5,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 
 public class StoneHopperEntity extends HopperBlockEntity {
@@ -22,6 +21,6 @@ public class StoneHopperEntity extends HopperBlockEntity {
 
     @Override
     public Text getContainerName() {
-        return new TranslatableText("container.stone_hopper");
+        return Text.translatable("container.stone_hopper");
     }
 }

@@ -8,7 +8,7 @@ import net.flytre.hplus.filter.FilterScreen;
 
 import java.util.List;
 
-public class HplusPlugin implements REIClientPlugin {
+public class HplusClientPlugin implements REIClientPlugin {
 
     @Override
     public void registerScreens(ScreenRegistry registry) {
