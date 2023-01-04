@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "hplus:upgrade_suction"
+    ]
+  },
+  "criteria": {
+    "has_base_upgrade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hplus:upgrade_base"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "hplus:upgrade_suction"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_base_upgrade",
+      "has_the_recipe"
+    ]
+  ]
+}

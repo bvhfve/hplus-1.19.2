@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " i ",
+    " Hi",
+    "s  "
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "s" : {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "hplus:wrench",
+    "count": 1
+  }
+}

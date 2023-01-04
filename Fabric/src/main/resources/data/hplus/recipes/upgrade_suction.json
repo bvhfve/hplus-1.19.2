@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "i#i",
+    "#G#",
+    "i#i"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:slime_block"
+    },
+    "G": {
+      "item": "hplus:upgrade_base"
+    },
+    "i" : {
+      "item" : "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "hplus:upgrade_suction",
+    "count": 1
+  }
+}

@@ -25,18 +25,15 @@
     "main": [
       "net.flytre.hplus.Initializer"
     ],
-    "server": [],
-    "rei_client": [
-      "net.flytre.hplus.rei.HplusClientPlugin"
-    ]
+    "server": []
   },
   "mixins": [
     "${mod_id}.mixins.json",
     "${mod_id}-fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.11",
-    "minecraft": "1.19.x",
+    "fabricloader": ">=0.14.12",
+    "minecraft": "1.19.2",
     "fabric" : "*",
     "flytre_lib": ">=${lib_version}",
     "java": ">=17"
