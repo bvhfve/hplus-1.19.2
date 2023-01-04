@@ -1,7 +1,7 @@
 import net.fabricmc.loom.task.RemapJarTask
 
 plugins {
-    id 'fabric-loom' version '0.12-SNAPSHOT'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'net.darkhax.curseforgegradle' version '1.0.7'
     id 'net.darkhax.tweedle' version '1.0.5'
     id 'idea'
